@@ -1,4 +1,6 @@
 using CardStorageService.Data;
+using CardStorageService.Services;
+using CardStorageService.Services.Implements;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
@@ -11,7 +13,7 @@ namespace CardStorageService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Logging service {
+            #region Logging service 
             builder.Services.AddHttpLogging(logging =>
             {
                 logging.LoggingFields = HttpLoggingFields.All | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestQuery;
@@ -26,14 +28,19 @@ namespace CardStorageService
                 logging.ClearProviders();
                 logging.AddConsole();
             }).UseNLog(new NLogAspNetCoreOptions() { RemoveLoggerFactoryFilter = true });
-            // } Logging service
+            #endregion
 
-            // Configure EF Core DBContext Service (CardStorageService Database) {
+            #region Configure EF Core DBContext Service (CardStorageService Database) 
             builder.Services.AddDbContext<CardStorageServiceDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);
             });
-            // } Configure EF Core DBContext Service
+            #endregion
+
+            #region Configure Repository
+            builder.Services.AddScoped<IClientRepositoryService, ClientRepository>();
+            builder.Services.AddScoped<ICardRepositoryService, CardRepository>();
+            #endregion
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
