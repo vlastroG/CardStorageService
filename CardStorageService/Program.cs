@@ -37,9 +37,15 @@ namespace CardStorageService
             });
             #endregion
 
-            #region Configure Repository
+            #region Configure Repository Services
             builder.Services.AddScoped<IClientRepositoryService, ClientRepository>();
             builder.Services.AddScoped<ICardRepositoryService, CardRepository>();
+            #endregion
+
+            #region Configure Services
+
+            builder.Services.AddSingleton<IAuthenticateService, AuthenticationService>();
+
             #endregion
 
             builder.Services.AddControllers();
