@@ -1,6 +1,7 @@
 ﻿using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
@@ -8,6 +9,7 @@ using System.Net.Http.Headers;
 
 namespace CardStorageService.Controllers
 {
+    [Authorize]
     [Route("api/auth")]
     [ApiController]
     public class AuthenticationController : ControllerBase
@@ -19,6 +21,7 @@ namespace CardStorageService.Controllers
             _authenticateService = authenticateService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthenticationRequest authenticationRequest)
         {
@@ -39,7 +42,7 @@ namespace CardStorageService.Controllers
             {
                 var scheme = headerValue.Scheme;
                 var sessionToken = headerValue.Parameter;
-                if (String.IsNullOrEmpty(scheme)) return Unauthorized();
+                if (String.IsNullOrEmpty(sessionToken)) return Unauthorized();
 
                 SessionInfo sessionInfo = _authenticateService.GetSessionInfo(sessionToken);
                 if (sessionInfo is null) return Unauthorized();

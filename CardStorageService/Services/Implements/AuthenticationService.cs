@@ -12,14 +12,12 @@ namespace CardStorageService.Services.Implements
 {
     public class AuthenticationService : IAuthenticateService
     {
-        private const string _secretKey = "DJy6$^%$3*(-_SXFTar!@~!`";
+        private const string _secretKey = "23^%#&gfdnb6!$53eSFGT";
 
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly ConcurrentDictionary<string, SessionInfo> _sessions =
             new ConcurrentDictionary<string, SessionInfo>();
-
-        private object _lock = new object();
 
         public AuthenticationService(IServiceScopeFactory serviceScopeFactory)
         {
@@ -102,6 +100,8 @@ namespace CardStorageService.Services.Implements
             }
             return sessionInfo;
         }
+
+        public static string SecretKey { get { return _secretKey; } }
 
         private SessionInfo GetSessionInfo(Account account, AccountSession accountSession)
         {

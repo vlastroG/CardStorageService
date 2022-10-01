@@ -2,15 +2,17 @@
 using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace CardStorageService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CardController : Controller
+    public class CardController : ControllerBase
     {
         private readonly ILogger<CardController> _logger;
         private readonly ICardRepositoryService _cardRepositoryService;
