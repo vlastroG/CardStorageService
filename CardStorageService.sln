@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordUtilsClient", "Pass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameworkSettings", "FrameworkSettings\FrameworkSettings.csproj", "{3A4C23D3-B686-4CBF-A7B1-78AC057A0A56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetSettings", "DotNetSettings\DotNetSettings.csproj", "{666ED90A-6D74-4497-A463-45F1F2FB2290}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFrameworksSettings", "TestFrameworksSettings", "{FFE9B8C5-4EFD-4450-8DD0-395E72A69D46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,17 @@ Global
 		{3A4C23D3-B686-4CBF-A7B1-78AC057A0A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A4C23D3-B686-4CBF-A7B1-78AC057A0A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A4C23D3-B686-4CBF-A7B1-78AC057A0A56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666ED90A-6D74-4497-A463-45F1F2FB2290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666ED90A-6D74-4497-A463-45F1F2FB2290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666ED90A-6D74-4497-A463-45F1F2FB2290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666ED90A-6D74-4497-A463-45F1F2FB2290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3A4C23D3-B686-4CBF-A7B1-78AC057A0A56} = {FFE9B8C5-4EFD-4450-8DD0-395E72A69D46}
+		{666ED90A-6D74-4497-A463-45F1F2FB2290} = {FFE9B8C5-4EFD-4450-8DD0-395E72A69D46}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A533439-2512-44A9-BA90-579D4B478D37}
