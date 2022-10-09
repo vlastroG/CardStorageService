@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
+using System.Net;
 using System.Text;
 
 namespace CardStorageService
@@ -21,6 +22,19 @@ namespace CardStorageService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region Configure gRPC
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Listen(IPAddress.Any, 5001, listenOptions =>
+                {
+                    listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+                });
+            });
+            builder.Services.AddGrpc();
+
+            #endregion
 
             #region Configure FluentValidator
 
@@ -142,7 +156,21 @@ namespace CardStorageService
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseHttpLogging();
+            // MICROSOFT will fix this problem in .NET 7
+            app.UseWhen(c => c.Request.ContentType != "application/grpc",
+                builder =>
+                {
+                    builder.UseHttpLogging();
+                }
+            );
+
+            //app.UseHttpLogging();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<ClientService>();
+                endpoints.MapGrpcService<CardService>();
+            });
 
             app.MapControllers();
 
