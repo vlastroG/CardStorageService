@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using Patterns.Sample_1_Singleton;
 using Patterns.Sample_2_AbstractFabric;
+using Patterns.Sample_3_FabricMethod;
 
 namespace Patterns
 {
@@ -25,6 +26,19 @@ namespace Patterns
             sqliteSaver.Save(new LogEntry[] { new LogEntry(), new LogEntry() });
 
             // Sample fabric method
+            var obj1 = ProductFactory.Create<ProductMarkI>();
+            Console.WriteLine(obj1.GetType());
+            var obj2 = ProductFactory.Create<ProductMarkII>();
+            Console.WriteLine(obj2.GetType());
+
+            var obj3 = ProductFactory.Create(typeof(ProductMarkI));
+            Console.WriteLine(obj3.GetType());
+            var obj4 = ProductFactory.Create(typeof(ProductMarkII));
+            Console.WriteLine(obj4.GetType());
+
+            Console.ReadKey(true);
+
+
         }
     }
 }
