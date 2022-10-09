@@ -3,6 +3,7 @@ using Oracle.ManagedDataAccess.Client;
 using Patterns.Sample_1_Singleton;
 using Patterns.Sample_2_AbstractFabric;
 using Patterns.Sample_3_FabricMethod;
+using Patterns.Sample_4_Builder;
 
 namespace Patterns
 {
@@ -36,9 +37,24 @@ namespace Patterns
             var obj4 = ProductFactory.Create(typeof(ProductMarkII));
             Console.WriteLine(obj4.GetType());
 
-            Console.ReadKey(true);
+            //Console.ReadKey(true);
 
+            // Sample builder
+            MailMessage mail1 = new MailMessageBuilder()
+                .From("me")
+                .To("you")
+                .Subject("life")
+                .Body("fun")
+                .Build();
+            Console.WriteLine(mail1);
 
+            MailMessage mail2 = new MailMessageBuilder()
+                .From("you")
+                .To("me")
+                .Subject("life")
+                .Body("fun")
+                .Build();
+            Console.WriteLine(mail2);
         }
     }
 }
