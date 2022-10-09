@@ -1,6 +1,11 @@
+using AutoMapper;
 using CardStorageService.Data;
+using CardStorageService.Mappings;
+using CardStorageService.Models.Requests;
+using CardStorageService.Models.Validators;
 using CardStorageService.Services;
 using CardStorageService.Services.Implements;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +21,22 @@ namespace CardStorageService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region Configure FluentValidator
+
+            builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthentificationRequestValidator>();
+            builder.Services.AddScoped<IValidator<CreateCardRequest>, CreateCardRequestValidator>();
+            builder.Services.AddScoped<IValidator<CreateClientRequest>, CreateClientRequestValidator>();
+
+            #endregion
+
+            #region ConfigureMapper
+
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MappingsProfile()));
+            var mapper = mapperConfiguration.CreateMapper();
+            builder.Services.AddSingleton(mapper);
+
+            #endregion
 
             #region Logging service 
             builder.Services.AddHttpLogging(logging =>
