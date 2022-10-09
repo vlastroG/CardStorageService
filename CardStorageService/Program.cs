@@ -24,6 +24,7 @@ namespace CardStorageService
 
             builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthentificationRequestValidator>();
             builder.Services.AddScoped<IValidator<CreateCardRequest>, CreateCardRequestValidator>();
+            builder.Services.AddScoped<IValidator<CreateClientRequest>, CreateClientRequestValidator>();
 
             #endregion
 
