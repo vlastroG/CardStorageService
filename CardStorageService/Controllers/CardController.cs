@@ -2,6 +2,8 @@
 using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
@@ -16,18 +18,26 @@ namespace CardStorageService.Controllers
     {
         private readonly ILogger<CardController> _logger;
         private readonly ICardRepositoryService _cardRepositoryService;
+        private readonly IValidator<CreateCardRequest> _createCardRequestValidator;
 
         public CardController(ILogger<CardController> logger,
-            ICardRepositoryService cardRepositoryService)
+            ICardRepositoryService cardRepositoryService,
+            IValidator<CreateCardRequest> createCardRequestValidator)
         {
             _logger = logger;
             _cardRepositoryService = cardRepositoryService;
+            _createCardRequestValidator = createCardRequestValidator;
         }
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public IActionResult Create([FromBody] CreateCardRequest request)
         {
+            ValidationResult validationResult = _createCardRequestValidator.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.ToDictionary());
+            }
             try
             {
                 var cardId = _cardRepositoryService.Create(new Card
@@ -35,7 +45,8 @@ namespace CardStorageService.Controllers
                     ClientId = request.ClientId,
                     CardN = request.CardN,
                     ExpDate = request.ExpDate,
-                    CVV2 = request.CVV2
+                    CVV2 = request.CVV2,
+                    Name = request.Name,
                 });
                 return Ok(new CreateCardResponse
                 {
