@@ -1,4 +1,7 @@
-﻿using Patterns.Sample_1;
+﻿using Microsoft.Data.Sqlite;
+using Oracle.ManagedDataAccess.Client;
+using Patterns.Sample_1_Singleton;
+using Patterns.Sample_2_AbstractFabric;
 
 namespace Patterns
 {
@@ -15,6 +18,13 @@ namespace Patterns
             bool test = singletonInstance1 == singletonInstance2;
 
             // Sample AbstractFabric
+            LogSaver oracleSaver = new LogSaver(new OracleClientFactory());
+            oracleSaver.Save(new LogEntry[] { new LogEntry(), new LogEntry() });
+
+            LogSaver sqliteSaver = new LogSaver(SqliteFactory.Instance);
+            sqliteSaver.Save(new LogEntry[] { new LogEntry(), new LogEntry() });
+
+            // Sample fabric method
         }
     }
 }
