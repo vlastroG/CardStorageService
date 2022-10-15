@@ -22,7 +22,7 @@ namespace FullTextSearchSimpleBenchmark
                 {
                     services.AddDbContext<DocumentDbContext>(options =>
                     {
-                        options.UseSqlServer(@"data source=DESKTOP-6DH4OOP\SQLEXPRESS;initial catalog=DocumentsDatabase;User Id=DocumentsDatabaseUser;Password=12345;MultipleActiveResultSets=True;App=EntityFramework");
+                        options.UseSqlServer(@"data source=VLASTRO\SQLEXPRESS;initial catalog=DocumentsDatabase;User Id=DocumentsDatabaseUser;Password=qwerty;MultipleActiveResultSets=True;App=EntityFramework");
                     });
                 })
                 .Build();
