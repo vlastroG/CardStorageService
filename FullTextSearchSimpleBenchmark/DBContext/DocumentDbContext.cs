@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FullTextSearchSimpleBenchmark.DBContext
 {
-    internal class DocumentDbContext : DbContext
+    public class DocumentDbContext : DbContext
     {
         public virtual DbSet<Document> Documents { get; set; }
 
