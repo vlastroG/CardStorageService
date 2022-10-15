@@ -1,4 +1,6 @@
 ﻿using FullTextSearchSimpleBenchmark.DBContext;
+using FullTextSearchSimpleBenchmark.Services;
+using FullTextSearchSimpleBenchmark.Services.Implements;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,14 +17,20 @@ namespace FullTextSearchSimpleBenchmark
         static void Main(string[] args)
         {
             var host = Host.CreateDefaultBuilder(args)
-                .ConfigureServices(servises =>
+                .ConfigureServices(services =>
                 {
-                    servises.AddDbContext<DocumentDbContext>(options =>
+                    services.AddDbContext<DocumentDbContext>(options =>
                     {
                         options.UseSqlServer(@"data source=VLASTRO\SQLEXPRESS;initial catalog=DocumentsDatabase;User Id=DocumentsDatabaseUser;Password=qwerty;MultipleActiveResultSets=True;App=EntityFramework");
                     });
+
+                    services.AddTransient<IDocumentRepository, DocumentRepository>();
                 })
                 .Build();
+
+            //host.Services.GetRequiredService<IDocumentRepository>().LoadDocuments();
+            var documentsSet = DocumentExtractor.DocumentsSet().Take(10000).ToArray();
+            new SimpleSearcher().Search("Monday", documentsSet);
         }
     }
 }
