@@ -14,6 +14,8 @@ namespace FullTextSearchSimpleBenchmark.DBContext
 
         public virtual DbSet<Word> Words { get; set; }
 
+        public virtual DbSet<WordDocument> WordDocuments { get; set; }
+
         public DocumentDbContext(DbContextOptions options) : base(options) { }
     }
 }
